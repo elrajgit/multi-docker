@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before install:
+  - docker build -t elrajdocker/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true elrajdocker/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t elrajdocker/multi-client ./client
+  - docker build -t elrajdocker/multi-nginx ./nginx
+  - docker build -t elrajdocker/multi-server ./server
+  - docker build -t elrajdocker/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take the images and push them to docker hub
+  - docker push elrajdocker/multi-client
+  - docker push elrajdocker/multi-nginx
+  - docker push elrajdocker/multi-server
+  - docker push elrajdocker/multi-worker
