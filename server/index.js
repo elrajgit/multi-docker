@@ -67,9 +67,6 @@ app.post('/values', async (req, res) => {
 
 app.listen(5000, err => {
 
-  if (err) {
-    console.error(err.stack);
-  }
-
   console.log('SERVER is listening on port  5000');
+  
 });
