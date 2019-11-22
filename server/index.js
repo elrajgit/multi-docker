@@ -18,7 +18,7 @@ const pgClient = new Pool({
   password: keys.pgPassword,
   port: keys.pgPort
 });
-pgClient.on('error', () => console.log('Lost PG connection'));
+pgClient.on('error', () => console.err(err.stack));
 
 pgClient
   .query('CREATE TABLE IF NOT EXISTS values (number INT)')
@@ -66,7 +66,5 @@ app.post('/values', async (req, res) => {
 });
 
 app.listen(5000, err => {
-
-  console.log('SERVER is listening on port  5000');
-  
+  console.log('SERVER is listening on port  5000!');
 });
