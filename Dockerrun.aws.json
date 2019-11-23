@@ -10,7 +10,7 @@
         },
         {
             "name": "server",
-            "image": "elrajdocker/multi-client",
+            "image": "elrajdocker/multi-server",
             "hostname": "api",
             "essential": false,
             "memory": 128
